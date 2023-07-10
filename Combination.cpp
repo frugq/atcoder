@@ -5,11 +5,11 @@ mint comb(ll n, ll k){
     if(init){
         for(int i = 2; i < maxF; ++i){
             fact.at(i) = fact.at(i - 1) * i;
-            invFact.at(i) = 1 / fact.at(i);
+            invFact.at(i) = fact.at(i).inv();
         }
         init = false;
     }
-    return fact.at(n) / fact.at(k) / fact.at(n - k);
+    return fact.at(n) * invFact.at(k) * invFact.at(n - k);
 }
 
 mint homo(ll n, ll r){
