@@ -11,6 +11,7 @@ public:
     void erase(T val);
     T getKthVal();      //小さい方からk番目の数
     T getKthSum();      //小さい方からk番目までの合計
+    int getSize();
 };
 
 template<class T, class Compare>
@@ -73,4 +74,9 @@ T TopK<T, Compare>::getKthVal(){
 template<class T, class Compare>
 T TopK<T, Compare>::getKthSum(){
     return sum_stTop;
+}
+
+template<class T, class Compare>
+int TopK<T, Compare>::getSize(){
+    return size(st_top) + size(st_bottom);
 }
