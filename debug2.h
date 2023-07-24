@@ -82,7 +82,7 @@ namespace debug{
     }
 
     int push(char x){
-        output << x << " ";
+        output << " " << x;
         return 0;
     }
     
