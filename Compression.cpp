@@ -3,6 +3,7 @@ class Compression{
 public:
     bool updated = false;
     map<T, int> mp;
+    vector<T> original;
 
     Compression<T>(){};
     Compression<T>(const vector<T>& vec);
@@ -26,9 +27,11 @@ void Compression<T>::add(T x){
 template<class T>
 void Compression<T>::update(){
     if(updated) return;
+    original.clear();
     int idx = 0;
     for(auto&& [e, f] : mp){
         f = idx++;
+        original.push_back(e);
     }
     updated = true;
 }
