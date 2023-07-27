@@ -49,23 +49,18 @@ namespace debug{
         return result;
     }
 
-    vector<vector<string>> outputSeparate(string s){
-        vector<vector<string>> result;
-        vector<string> tmp;
+    vector<string> outputSeparate(string s){
+        vector<string> result;
         for(int i = 0; i < SIZE(s); ++i){
             char e = s.at(i);
             if(e == '\n'){
-                result.push_back(tmp);
-                tmp.clear();
-                tmp.push_back("");
-                i++;
+                result.push_back("\n");
             }else if(e == ' '){
-                tmp.push_back("");
+                result.push_back(" ");
             }else{
-                tmp.back() += e;
+                result.back() += e;
             }
         }
-        result.push_back(tmp);
         return result;
     }
 
@@ -300,14 +295,12 @@ namespace debug{
             }
 
             int width = 0;
-            for(const auto& e : outputSeparate(output.str())) for(const auto& f : e){
-                width = max(width, SIZE(f));
+            for(const auto& e : outputSeparate(output.str())){
+                width = max(width, SIZE(e));
             }
             for(const auto& e : outputSeparate(output.str())){
-                for(const auto& f : e){
-                    cerr << space.substr(0, width - size(f) + 1) << f;
-                }
-                cerr << endl;
+                //cerr << space.substr(0, width - size(f) + 1) << f;
+                cerr << e;
             }
         }
         idx++;
