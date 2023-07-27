@@ -299,8 +299,7 @@ namespace debug{
                 width = max(width, SIZE(e));
             }
             for(const auto& e : outputSeparate(output.str())){
-                //cerr << space.substr(0, width - size(f) + 1) << f;
-                cerr << e;
+                cerr << space.substr(0, width - size(e)) << e;
             }
         }
         idx++;
