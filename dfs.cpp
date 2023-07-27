@@ -13,7 +13,7 @@ public:
 };
 ostream& operator<<(ostream& os, const DFS& dfs);
 
-DFS::DFS(int n_) : n(n_){
+DFS::DFS(int N) : n(N){
     cnt_seen = 0;
     road.resize(n);
     seen.resize(n, false);
