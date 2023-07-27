@@ -10,9 +10,13 @@ using namespace std;
 
 namespace debug{
     using ll = long long;
+    #define SIZE(x) (int)(x.size())
     vector<string> name;
     stringstream output;
     int idx = 0;
+    int maxDispCnt = 15;
+    string space = "                                                         ";
+
     int push(ll x);
     int push(double x);
     int push(int x);
@@ -42,6 +46,26 @@ namespace debug{
             else if(e == ',') result.push_back("");
             else result.back() += e;
         }
+        return result;
+    }
+
+    vector<vector<string>> outputSeparate(string s){
+        vector<vector<string>> result;
+        vector<string> tmp;
+        for(int i = 0; i < SIZE(s); ++i){
+            char e = s.at(i);
+            if(e == '\n'){
+                result.push_back(tmp);
+                tmp.clear();
+                tmp.push_back("");
+                i++;
+            }else if(e == ' '){
+                tmp.push_back("");
+            }else{
+                tmp.back() += e;
+            }
+        }
+        result.push_back(tmp);
         return result;
     }
 
@@ -140,13 +164,13 @@ namespace debug{
 
     template<class T>
     int push(vector<T> x){
-        int sep = 0;
-        for(const auto& e : x){
-            int tmp = push(e);
+        int sep = 1;
+        for(int i = 0; i < min<int>(maxDispCnt, SIZE(x)); ++i){
+            int tmp = push(x.at(i));
             sep += tmp;
             if(tmp) output << "\n";
         }
-        return sep + 1;
+        return sep;
     }
 
     template<class T1, class T2>
@@ -165,66 +189,92 @@ namespace debug{
         return 0;
     }
 
-//ここから未確認
     template<class T>
     int push(set<T> x){
-        for(const auto& e : x){
-            push(e);
+        int sep = 1;
+        for(int i = 0; i < min<int>(maxDispCnt, x); ++i){
+            int tmp = push(x.at(i));
+            if(tmp >= 1) output << "\n";
+            sep += tmp;
         }
-        return 1;
+        return sep;
     }
 
     template<class T>
     int push(set<T, greater<T>> x){
+        int sep = 1, cnt = 0;
         for(const auto& e : x){
-            push(e);
+            int tmp = push(e);
+            if(tmp >= 1) output << "\n";
+            sep += tmp;
+            if(cnt++ >= maxDispCnt) break;
         }
-        return 1;
+        return sep;
     }
 
     template<class T>
     int push(multiset<T> x){
+        int sep = 1, cnt = 0;
         for(const auto& e : x){
-            push(e);
+            int tmp = push(e);
+            if(tmp >= 1) output << "\n";
+            sep += tmp;
+            if(cnt++ >= maxDispCnt) break;
         }
-        return 1;
+        return sep;
     }
 
     template<class T>
     int push(multiset<T, greater<T>> x){
+        int sep = 1, cnt = 0;
         for(const auto& e : x){
-            push(e);
+            int tmp = push(e);
+            if(tmp >= 1) output << "\n";
+            sep += tmp;
+            if(cnt++ >= maxDispCnt) break;
         }
-        return 1;
+        return sep;
     }
 
     template<class T>
     int push(queue<T> x){
+        int sep = 1, cnt = 0;
         while(!x.empty()){
-            push(x.front());
+            int tmp = push(x.front());
             x.pop();
+            if(tmp >= 1) output << "\n";
+            sep += tmp;
+            if(cnt++ >= maxDispCnt) break;
         }
-        return 1;
+        return sep;
     }
 
     template<class T>
     int push(priority_queue<T> x){
+        int sep = 1, cnt = 0;
         while(!x.empty()){
-            push(x.top());
+            int tmp = push(x.front());
             x.pop();
+            if(tmp >= 1) output << "\n";
+            sep += tmp;
+            if(cnt++ >= maxDispCnt) break;
         }
-        return 1;
+        return sep;
     }
 
     template<class T>
     int push(priority_queue<T, vector<T>, greater<T>> x){
+        int sep = 1, cnt = 0;
         while(!x.empty()){
-            push(x.top());
+            int tmp = push(x.front());
             x.pop();
+            if(tmp >= 1) output << "\n";
+            sep += tmp;
+            if(cnt++ >= maxDispCnt) break;
         }
-        return 1;
+        return sep;
     }
-//ここまで未確認
+
     void show_sub2(char x){
         if(idx != 0) cerr << ", ";
         cerr << x;
@@ -248,7 +298,17 @@ namespace debug{
             }else{
                 cerr << name.at(idx) + " =";
             }
-            cerr << output.str();
+
+            int width = 0;
+            for(const auto& e : outputSeparate(output.str())) for(const auto& f : e){
+                width = max(width, SIZE(f));
+            }
+            for(const auto& e : outputSeparate(output.str())){
+                for(const auto& f : e){
+                    cerr << space.substr(0, width - size(f) + 1) << f;
+                }
+                cerr << endl;
+            }
         }
         idx++;
     }
