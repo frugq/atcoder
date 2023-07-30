@@ -14,7 +14,7 @@ namespace debug{
     vector<string> name;
     stringstream output;
     int idx = 0;
-    int maxDispCnt = 15;
+    int maxDispCnt = 100;
     string space = "                                                         ";
 
     int push(ll x);
@@ -107,7 +107,7 @@ namespace debug{
     
     int push(string x){
         output << " " << x;
-        return 0;
+        return 1;
     }
 
     template<class T1, class T2>
@@ -295,11 +295,17 @@ namespace debug{
             }
 
             int width = 0;
+            bool sep = false;
             for(const auto& e : outputSeparate(output.str())){
                 width = max(width, SIZE(e));
+                if(e.back() == '\n') sep = true;
             }
             for(const auto& e : outputSeparate(output.str())){
-                cerr << space.substr(0, width - size(e)) << e;
+                if(sep){
+                    cerr << space.substr(0, width - size(e)) << e;
+                }else{
+                    cerr << e;
+                }
             }
         }
         idx++;
