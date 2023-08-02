@@ -5,7 +5,7 @@ public:
 
     Fraction(){};
     Fraction(ll Num) : num(Num){};
-    Fraction(ll Num, ll Den) : num(Num), den(Den){};
+    Fraction(ll Num, ll Den) : num(Num), den(Den){ reduction();};
 
     void reduction();
     Fraction operator +(Fraction y);
@@ -22,7 +22,6 @@ public:
     bool operator <(Fraction y) const;
     bool operator >(Fraction y) const;
 };
-string to_string(Fraction x);
 Fraction operator *(ll x, Fraction y);
 
 void Fraction::reduction(){
@@ -97,6 +96,7 @@ bool Fraction::operator >(Fraction y) const{
     return num * y.den > den * y.num;
 }
 
-string to_string(Fraction x){
-    return std::to_string(x.num) + "/" + std::to_string(x.den);
+ostream& operator <<(ostream& os, Fraction x){
+    os << to_string(x.num) << "/" << to_string(x.den);
+    return os;
 }
