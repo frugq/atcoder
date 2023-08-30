@@ -2,78 +2,351 @@
 #define INIT_H
 #include <bits/stdc++.h>
 using namespace std;
-#ifdef ATCODER_ALL
-    #include <atcoder/all>
-    using namespace atcoder;
-#endif
-string debug;
-#define CNT 50
-#define show(x) debug="";cerr<<# x<<" = "<<(sub((x))>1?"\n":"")<<debug<<"\n";
-#define show_(x) debug="";cerr<<# x<<" = "<<(sub((x))>1?"\n":"")<<debug<<", ";
-#define show2(x,y) show_(x);show(y);
-#define show3(x,y,z) show_(x);show_(y);show(z);
-#define show4(w,x,y,z) show_(w);show_(x);show_(y);show(z);
-#define show5(v,w,x,y,z) show_(v);show_(w);show_(x);show_(y);show(z);
-#define show6(u,v,w,x,y,z) show(u);show_(v);show_(w);show_(x);show_(y);show(z);
-#define show7(t,u,v,w,x,y,z) show_(t);show(u);show_(v);show_(w);show_(x);show_(y);show(z);
-#define show8(s,t,u,v,w,x,y,z) show_(s);show_(t);show(u);show_(v);show_(w);show_(x);show_(y);show(z);
-#define show9(r,s,t,u,v,w,x,y,z) show_(r);show_(s);show_(t);show(u);show_(v);show_(w);show_(x);show_(y);show(z);
 
-string padding(string x);
-int sub(const string x);
-//int sub(const string x);
-int sub(const char* x);
-int sub(const bool x);
-#ifdef ATCODER
-int sub(modint x);
-int sub(modint1000000007 x);
-int sub(modint998244353 x);
+#define show(...)   debug::name = debug::separate(#__VA_ARGS__); \
+                    debug::idx = 0; \
+                    debug::show_sub(__VA_ARGS__); \
+                    cerr << endl;
+#ifdef DFUNC
+#define dfunc(x)    cerr << __func__ << " " << #x << endl;
 #endif
-template<class T>int sub(vector<T>x);
-template<class T>int sub(set<T> x);
-template<class T,class U>int sub(pair<T,U>x);
-template<class T>int sub(tuple<T>x);
-template<class T,class U> int sub(tuple<T,U>x);
-template<class T,class U,class V>int sub(tuple<T,U,V>x);
-template<class T,class U,class V,class W>int sub(tuple<T,U,V,W>x);
-template<class T,class U,class V,class W, class X>int sub(tuple<T,U,V,W,X>x);
-template<class T,class U,class V,class W, class X, class Y>int sub(tuple<T,U,V,W,X,Y>x);
-template<class T,class U,class V,class W, class X, class Y, class Z>int sub(tuple<T,U,V,W,X,Y,Z>x);
-template<class T>int sub(queue<T>x);
-template<class T>int sub(priority_queue<T>x);
-template<class T>int sub(priority_queue<T,vector<T>,greater<T>>x);
-template<class T>int sub(vector<T>x);
-template<class T>int sub(set<T> x);
-template<class T,class U>int sub(map<T,U>x);
-template<class T>int sub(T x);
+#ifndef DFUNC
+#define dfunc(x)
+#endif
+namespace debug{
+    using ll = long long;
+    #define SIZE(x) (int)(x.size())
+    vector<string> name;
+    stringstream output;
+    int idx = 0;
+    int maxDispCnt = 100;
+    string space = "                                                         ";
 
-string padding(string x){return ("   " + x).substr(size(x));}
-int sub(const string x){debug+=x+" ";return 0;}
-//int sub(const string x){debug+=padding(x)+" ";return 0;}
-int sub(const char* x){return sub((string)x);}
-int sub(const bool x){return sub(x?"1":"0");}
-#ifdef ATCODER
-int sub(modint x){return sub(x.to_string());}
-int sub(modint1000000007 x){return sub(x.to_string());}
-int sub(modint998244353 x){return sub(x.to_string());}
-#endif
-int sub(bitset<10> x){return sub(x.to_string());}
-template<class T,class U>int sub(pair<T,U>x){sub(x.first);sub(x.second);return 1;}
-template<class T>int sub(tuple<T>x){sub(get<0>(x));return 0;}
-template<class T,class U> int sub(tuple<T,U>x){sub(get<0>(x));sub(get<1>(x));return 1;}
-template<class T,class U,class V>int sub(tuple<T,U,V>x){sub(get<0>(x));sub(get<1>(x));sub(get<2>(x));return 1;}
-template<class T,class U,class V,class W>int sub(tuple<T,U,V,W> x){sub(get<0>(x));sub(get<1>(x));sub(get<2>(x));sub(get<3>(x));return 1;}
-template<class T,class U,class V,class W, class X>int sub(tuple<T,U,V,W,X>x){sub(get<0>(x));sub(get<1>(x));sub(get<2>(x));sub(get<3>(x));sub(get<4>(x)); return 1;}
-template<class T,class U,class V,class W, class X, class Y>int sub(tuple<T,U,V,W,X,Y>x){sub(get<0>(x));sub(get<1>(x));sub(get<2>(x));sub(get<3>(x));sub(get<4>(x));sub(get<5>(x)); return 1;}
-template<class T,class U,class V,class W, class X, class Y, class Z>int sub(tuple<T,U,V,W,X,Y,Z>x){sub(get<0>(x));sub(get<1>(x));sub(get<2>(x));sub(get<3>(x));sub(get<4>(x));sub(get<5>(x));sub(get<6>(x));return 1;}
-template<class T>int sub(queue<T>x){int result=1;while(!x.empty()){if(sub(x.front()))debug+="\n";result++;x.pop();}return result;}
-template<class T>int sub(priority_queue<T>x){int result=1;while(!x.empty()){if(sub(x.top()))result++;x.pop();}return result;}
-template<class T>int sub(priority_queue<T,vector<T>,greater<T>>x){int result=1;while(!x.empty()){if(sub(x.top()))result++;x.pop();}return result;}
-template<class T>int sub(vector<T>x){int result=1;for(int i=0;i<min<int>(CNT,size(x));++i){if(sub(x.at(i))){debug+="\n";result++;}}return result;}
-template<class T>int sub(set<T> x){int result=1;for(const auto&e:x){if(sub(e)){debug+="\n";result++;}}return result;}
-template<class T>int sub(set<T,greater<T>> x){int result=1;for(const auto&e:x){if(sub(e)){debug+="\n";result++;}}return result;}
-template<class T>int sub(multiset<T> x){int result=1;for(const auto&e:x){if(sub(e)){debug+="\n";result++;}}return result;}
-template<class T>int sub(multiset<T,greater<T>> x){int result=1;for(const auto&e:x){if(sub(e)){debug+="\n";result++;}}return result;}
-template<class T,class U>int sub(map<T,U>x){debug+="\n";for(const auto&[e,f]:x){sub(e);sub(f);debug+="\n";}return 1;}
-template<class T>int sub(T x){return sub(x>1e9?"inf":(x<-1e9?"-inf":to_string(x)));}
+    int push(ll x);
+    int push(double x);
+    int push(int x);
+    int push(char x);
+    int push(string x);
+    template<class T1, class T2> int push(pair<T1, T2> x);
+    template<class T1> int push(tuple<T1> x);
+    template<class T1, class T2> int push(tuple<T1, T2> x);
+    template<class T1, class T2, class T3> int push(tuple<T1, T2, T3> x);
+    template<class T1, class T2, class T3, class T4> int push(tuple<T1, T2, T3, T4> x);
+    template<class T1, class T2, class T3, class T4, class T5> int push(tuple<T1, T2, T3, T4, T5> x);
+    template<class T> int push(vector<T> x);
+    template<class T> int push(set<T> x);
+    template<class T> int push(set<T, greater<T>> x);
+    template<class T> int push(multiset<T> x);
+    template<class T> int push(multiset<T, greater<T>> x);
+    template<class T> int push(queue<T> x);
+    template<class T> int push(deque<T> x);
+    template<class T> int push(priority_queue<T> x);
+    template<class T> int push(priority_queue<T, vector<T>, greater<T>> x);
+    template<class T1, class T2> int push(map<T1, T2> x);
+    template<class T> int push(T x);
+
+    vector<string> separate(string s){
+        int cntOpen = 0;
+        vector<string> result(1);
+        for(const auto& e : s){
+            if(e == '(') cntOpen++;
+            if(e == ')') cntOpen--;
+            if(e == ' ') continue;
+            else if(e == ',' && cntOpen == 0) result.push_back("");
+            else result.back() += e;
+        }
+        return result;
+    }
+
+    vector<string> outputSeparate(string s){
+        vector<string> result;
+        for(int i = 0; i < SIZE(s); ++i){
+            char e = s.at(i);
+            if(e == '\n'){
+                result.push_back("\n");
+            }else if(e == ' '){
+                result.push_back(" ");
+            }else{
+                result.back() += e;
+            }
+        }
+        return result;
+    }
+
+    int push(ll x){
+        ll inf = 1LL << 60;
+        if(inf <= x){
+            output << " inf";
+        }else if(x <= -inf){
+            output << " -inf";
+        }else{
+            output << " " << x;
+        }
+        return 0;
+    }
+
+    int push(double x){
+        double inf = 1e18;
+        if(inf <= x){
+            output << " inf";
+        }else if(x <= -inf){
+            output << " -inf";
+        }else{
+            output << " " << x;
+        }
+        return 0;
+    }
+
+    int push(int x){
+        int inf = 1 << 30;
+        if(inf <= x){
+            output << " inf";
+        }else if(x <= -inf){
+            output << " -inf";
+        }else{
+            output << " " << x;
+        }
+        return 0;
+    }
+
+    int push(char x){
+        output << " " << x;
+        return 0;
+    }
+    
+    int push(string x){
+        output << " " << x;
+        return 1;
+    }
+
+    template<class T1, class T2>
+    int push(pair<T1, T2> x){
+        push(x.first);
+        push(x.second);
+        return 1;
+    }
+
+    template<class T1>
+    int push(tuple<T1> x){
+        push(get<0>(x));
+        return 1;
+    }
+    
+    template<class T1, class T2>
+    int push(tuple<T1, T2> x){
+        push(get<0>(x));
+        push(get<1>(x));
+        return 1;
+    }
+
+    template<class T1, class T2, class T3>
+    int push(tuple<T1, T2, T3> x){
+        push(get<0>(x));
+        push(get<1>(x));
+        push(get<2>(x));
+        return 1;
+    }
+
+    template<class T1, class T2, class T3, class T4>
+    int push(tuple<T1, T2, T3, T4> x){
+        push(get<0>(x));
+        push(get<1>(x));
+        push(get<2>(x));
+        push(get<3>(x));
+        return 1;
+    }
+
+    template<class T1, class T2, class T3, class T4, class T5>
+    int push(tuple<T1, T2, T3, T4, T5> x){
+        push(get<0>(x));
+        push(get<1>(x));
+        push(get<2>(x));
+        push(get<3>(x));
+        push(get<4>(x));
+        return 1;
+    }
+
+    template<class T>
+    int push(vector<T> x){
+        int sep = 1;
+        for(int i = 0; i < min<int>(maxDispCnt, SIZE(x)); ++i){
+            int tmp = push(x.at(i));
+            sep += tmp;
+            if(tmp) output << "\n";
+        }
+        return sep;
+    }
+
+    template<class T1, class T2>
+    int push(map<T1, T2> x){
+        output << "\n";
+        for(const auto& e : x){
+            push(e);
+            output << "\n";
+        }
+        return true;
+    }
+
+    template<class T>
+    int push(T x){
+        output << " " << x;
+        return 0;
+    }
+
+    template<class T>
+    int push(set<T> x){
+        int sep = 1, cnt = 0;
+        for(const auto& e : x){
+            int tmp = push(e);
+            if(tmp >= 1) output << "\n";
+            sep += tmp;
+            if(cnt++ >= maxDispCnt) break;
+        }
+        return sep;
+    }
+
+    template<class T>
+    int push(set<T, greater<T>> x){
+        int sep = 1, cnt = 0;
+        for(const auto& e : x){
+            int tmp = push(e);
+            if(tmp >= 1) output << "\n";
+            sep += tmp;
+            if(cnt++ >= maxDispCnt) break;
+        }
+        return sep;
+    }
+
+    template<class T>
+    int push(multiset<T> x){
+        int sep = 1, cnt = 0;
+        for(const auto& e : x){
+            int tmp = push(e);
+            if(tmp >= 1) output << "\n";
+            sep += tmp;
+            if(cnt++ >= maxDispCnt) break;
+        }
+        return sep;
+    }
+
+    template<class T>
+    int push(multiset<T, greater<T>> x){
+        int sep = 1, cnt = 0;
+        for(const auto& e : x){
+            int tmp = push(e);
+            if(tmp >= 1) output << "\n";
+            sep += tmp;
+            if(cnt++ >= maxDispCnt) break;
+        }
+        return sep;
+    }
+
+    template<class T>
+    int push(queue<T> x){
+        int sep = 1, cnt = 0;
+        while(!x.empty()){
+            int tmp = push(x.front());
+            x.pop();
+            if(tmp >= 1) output << "\n";
+            sep += tmp;
+            if(cnt++ >= maxDispCnt) break;
+        }
+        return sep;
+    }
+
+    template<class T>
+    int push(deque<T> x){
+        int sep = 1, cnt = 0;
+        while(!x.empty()){
+            int tmp = push(x.front());
+            x.pop_front();
+            if(tmp >= 1) output << "\n";
+            sep += tmp;
+            if(cnt++ >= maxDispCnt) break;
+        }
+        return sep;
+    }
+
+    template<class T>
+    int push(priority_queue<T> x){
+        int sep = 1, cnt = 0;
+        while(!x.empty()){
+            int tmp = push(x.top());
+            x.pop();
+            if(tmp >= 1) output << "\n";
+            sep += tmp;
+            if(cnt++ >= maxDispCnt) break;
+        }
+        return sep;
+    }
+
+    template<class T>
+    int push(priority_queue<T, vector<T>, greater<T>> x){
+        int sep = 1, cnt = 0;
+        while(!x.empty()){
+            int tmp = push(x.top());
+            x.pop();
+            if(tmp >= 1) output << "\n";
+            sep += tmp;
+            if(cnt++ >= maxDispCnt) break;
+        }
+        return sep;
+    }
+
+    void show_sub2(char x){
+        if(idx != 0) cerr << ", ";
+        cerr << x;
+        idx++;
+    }
+    
+    void show_sub2(const char* x){
+        if(idx != 0) cerr << ", ";
+        cerr << x;
+        idx++;
+    }
+
+    template<class T>
+    void show_sub2(T x){
+        if(idx != 0) cerr << ", ";
+        if(isdigit(name.at(idx).at(0))){
+            cerr << name.at(idx);
+        }else{
+            if(push(x) >= 2){
+                cerr << "\n" << name.at(idx) << " =\n";
+            }else{
+                cerr << name.at(idx) + " =";
+            }
+
+            int width = 0;
+            bool sep = false;
+            for(const auto& e : outputSeparate(output.str())){
+                width = max(width, SIZE(e));
+                if(e.back() == '\n') sep = true;
+            }
+            for(const auto& e : outputSeparate(output.str())){
+                if(sep){
+                    cerr << space.substr(0, width - size(e)) << e;
+                }else{
+                    cerr << e;
+                }
+            }
+        }
+        idx++;
+    }
+
+    //https://marycore.jp/prog/cpp/variadic-function/
+    template<class T1>
+    void show_sub(T1 first){
+        output.str("");
+        show_sub2(first);
+    }
+
+    template<class T1, class... T2>
+    void show_sub(T1 first, T2... rest){
+        output.str("");
+        show_sub2(first);
+        show_sub(rest...);
+    }
+}
+
 #endif
