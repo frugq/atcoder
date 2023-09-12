@@ -23,6 +23,7 @@ public:
     bool operator >(Fraction y) const;
 };
 Fraction operator *(ll x, Fraction y);
+ostream& operator <<(ostream& os, Fraction x);
 
 void Fraction::reduction(){
     ll g = gcd(num, den);
