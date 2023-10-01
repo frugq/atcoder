@@ -1,45 +1,37 @@
-template<class Dist>
 class BFS{
 public:
-    int n, zero, inf;
+    int n, zero = 0, inf = 1 << 30;
     vector<int> start;
     vector<vector<int>> road;
-    vector<Dist> dist;
+    vector<int> dist;
 
     BFS(){}
-    BFS(int N, const vector<int>& Start, Dist Zero, Dist Inf);
-    void resize(int N, const vector<int>& Start, Dist Zero, Dist Inf);
+    BFS(int N, const vector<int>& Start);
+    void resize(int N, const vector<int>& Start);
     void makeRoad(int u, int v);
     void clear();
     void solve();
     vector<int> getPath(int end);
 };
 
-template<class Dist>
-ostream& operator <<(ostream& os, const BFS<Dist>& bfs);
+ostream& operator <<(ostream& os, const BFS& bfs);
 
-template<class Dist>
-BFS<Dist>::BFS(int N, const vector<int>& Start, Dist Zero, Dist Inf){
-    resize(N, Start, Zero, Inf);
+BFS::BFS(int N, const vector<int>& Start){
+    resize(N, Start);
 }
 
-template<class Dist>
-void BFS<Dist>::resize(int N, const vector<int>& Start, Dist Zero, Dist Inf){
+void BFS::resize(int N, const vector<int>& Start){
     n = N;
     start = Start;
-    zero = Zero;
-    inf = Inf;
     road.resize(n);
     dist.resize(n, inf);
 }
 
-template<class Dist>
-void BFS<Dist>::makeRoad(int u, int v){
+void BFS::makeRoad(int u, int v){
     road.at(u).push_back(v);
 }
 
-template<class Dist>
-void BFS<Dist>::solve(){
+void BFS::solve(){
     queue<int> que;
     for(const auto& e : start){
         que.emplace(e);
@@ -56,13 +48,11 @@ void BFS<Dist>::solve(){
     }
 }
 
-template<class Dist>
-void BFS<Dist>::clear(){
-    for(auto&& e : dist) e - inf;
+void BFS::clear(){
+    for(auto&& e : dist) e = inf;
 }
 
-template<class Dist>
-vector<int> BFS<Dist>::getPath(int end){
+vector<int> BFS::getPath(int end){
     assert(dist.at(end) < inf);
     int now = end;
     vector<int> result = {end};
@@ -82,8 +72,7 @@ vector<int> BFS<Dist>::getPath(int end){
     return result;
 }
 
-template<class Dist>
-ostream& operator <<(ostream& os, const BFS<Dist>& bfs){
+ostream& operator <<(ostream& os, const BFS& bfs){
     os << endl;
     for(int i = 0; i < SIZE(bfs.road); ++i){
         os << left << setw(2) << i << " -> ";
