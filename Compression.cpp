@@ -5,8 +5,8 @@ public:
     map<T, int> mp;
     vector<T> original;
 
-    Compression<T>(){};
-    Compression<T>(const vector<T>& vec);
+    Compression(){}
+    Compression(const vector<T>& vec);
     void add(T x);
     void update();
     int getIdx(T val);
