@@ -5,28 +5,30 @@ public:
   int h, w;
   V2 elem;
   
-  Mat<T>(int H, int W);
-  Mat<T>(const V2& Vec);
-  Mat<T> unit(int n);
-  Mat<T> operator+(const Mat<T>& y);
+  Mat(){}
+  Mat(int H, int W);
+  Mat(const V2& Vec);
+  Mat unit(int n);
+  Mat operator+(const Mat<T>& y);
   void operator+=(const Mat<T>& y);
-  Mat<T> operator -(const Mat<T>& y);
-  Mat<T> operator -();
+  Mat operator -(const Mat<T>& y);
+  Mat operator -();
   void operator -=(const Mat<T>& y);
-  Mat<T> operator *(const Mat<T>& y);
+  Mat operator *(const Mat<T>& y);
   void operator *=(const Mat<T>& y);
-  Mat<T> operator *(T y);
+  Mat operator *(T y);
   void operator *=(T y);
-  Mat<T> operator /(T y);
+  Mat operator /(T y);
   void operator /=(T y);
-  Mat<T> pow(ll y);
-  Mat<T> trans();
-  Mat<T> inv();
+  Mat pow(ll y);
+  Mat trans();
+  Mat inv();
   bool operator ==(const Mat<T>& y) const;
   bool operator !=(const Mat<T>& y) const;
 };
 template<class T> Mat<T> operator -(const Mat<T>& y);
 template<class T> Mat<T> operator *(T x, const Mat<T>& y);
+template<class T> ostream& operator<<(ostream& os, const Mat<T>& y);
 
 template<class T>
 Mat<T>::Mat(int H, int W){
