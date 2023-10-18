@@ -1,4 +1,5 @@
 mint comb(ll n, ll k){
+	assert(n - k >= 0);
     int maxF = 1e6;
     static bool init = true;
     static vector<mint> fact(maxF, 1), invFact(maxF, 1);
