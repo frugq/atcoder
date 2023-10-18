@@ -1,4 +1,6 @@
 mint comb(ll n, ll k){
+	assert(n >= 0);
+	assert(k >= 0);
 	assert(n - k >= 0);
     int maxF = 1e6;
     static bool init = true;
