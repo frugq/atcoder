@@ -1,7 +1,7 @@
 template<class Dist>
 class Dijkstra{
 public:
-    using Troad = tuple<Dist, int>;
+    using Troad = tuple<int, Dist>;
     using Tque = tuple<Dist, int>;
     int n;
     Dist zero, inf;
@@ -43,6 +43,7 @@ void Dijkstra<Dist>::solve(int start){
         seen.at(nowPos) = true;
         for(const auto& [nxtPos, addDist] : road.at(nowPos)){
             Dist nxtDist = dist.at(nowPos) + addDist;
+            if(nxtDist < zero) continue;//オーバーフロー対策
             if(chmin(dist.at(nxtPos), dist.at(nowPos) + addDist)){
                 que.emplace(make_tuple(nxtDist, nxtPos));
             }
