@@ -1,7 +1,7 @@
 template<class T>
 class KthElementInLoop{
 public:
-    ll n = -1, loopStart = -1, loopEnd = -1, loopCycle = -1, k = -1;
+    ll n = -1, loopStart = -1, loopEnd = -1, loopCycle = -1;
     vector<T> vec;
     KthElementInLoop(){}
     KthElementInLoop(const vector<T> Vec);
