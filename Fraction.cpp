@@ -21,6 +21,8 @@ public:
     bool operator !=(Fraction y) const;
     bool operator <(Fraction y) const;
     bool operator >(Fraction y) const;
+    bool operator <=(Fraction y) const;
+    bool operator >=(Fraction y) const;
 };
 Fraction operator *(ll x, Fraction y);
 ostream& operator <<(ostream& os, Fraction x);
@@ -95,6 +97,14 @@ bool Fraction::operator <(Fraction y) const{
 
 bool Fraction::operator >(Fraction y) const{
     return num * y.den > den * y.num;
+}
+
+bool Fraction::operator <=(Fraction y) const{
+    return num * y.den <= den * y.num;
+}
+
+bool Fraction::operator >=(Fraction y) const{
+    return num * y.den >= den * y.num;
 }
 
 ostream& operator <<(ostream& os, Fraction x){
