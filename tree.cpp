@@ -1,6 +1,6 @@
 template<class Dist>
 class Tree{
-private:
+private: 
     int n, root, idxRoad = 0, log2N = 0;
     const int int_inf = 1 << 30;
     Dist zero, inf;
