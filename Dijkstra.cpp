@@ -44,7 +44,7 @@ void Dijkstra<Dist>::solve(int start){
         for(const auto& [nxtPos, addDist] : road.at(nowPos)){
             Dist nxtDist = dist.at(nowPos) + addDist;
             if(nxtDist < zero) continue;//オーバーフロー対策
-            if(chmin(dist.at(nxtPos), dist.at(nowPos) + addDist)){
+            if(chmin(dist.at(nxtPos), nxtDist)){
                 que.emplace(make_tuple(nxtDist, nxtPos));
             }
         }
