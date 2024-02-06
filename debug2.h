@@ -170,7 +170,10 @@ namespace debug{
         if(group.count(typeid(x).name())) push("[");
         push(x.first);
         push(x.second);
-        if(group.count(typeid(x).name())) push("]");
+        if(group.count(typeid(x).name())){
+            push("]");
+            return 0;
+        }
         return 1;
     }
 
