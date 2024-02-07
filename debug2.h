@@ -167,10 +167,15 @@ namespace debug{
 
     template<class T1, class T2>
     int push(pair<T1, T2> x){
-        if(group.count(typeid(x).name())) push("[");
+        bool isGroup = group.count(typeid(x).name());
+        if(isGroup){
+            push("[");
+            SET_GROUP(T1);
+            SET_GROUP(T2);
+        }
         push(x.first);
         push(x.second);
-        if(group.count(typeid(x).name())){
+        if(isGroup){
             push("]");
             return 0;
         }
@@ -179,9 +184,13 @@ namespace debug{
 
     template<class T1>
     int push(tuple<T1> x){
-        if(group.count(typeid(x).name())) push("[");
+        bool isGroup = group.count(typeid(x).name());
+        if(isGroup){
+            push("[");
+            SET_GROUP(T1);
+        }
         push(get<0>(x));
-        if(group.count(typeid(x).name())){
+        if(isGroup){
             push("]");
             return 0;
         }
@@ -190,10 +199,15 @@ namespace debug{
     
     template<class T1, class T2>
     int push(tuple<T1, T2> x){
-        if(group.count(typeid(x).name())) push("[");
+        bool isGroup = group.count(typeid(x).name());
+        if(isGroup){
+            push("[");
+            SET_GROUP(T1);
+            SET_GROUP(T2);
+        }
         push(get<0>(x));
         push(get<1>(x));
-        if(group.count(typeid(x).name())){
+        if(isGroup){
             push("]");
             return 0;
         }
@@ -202,11 +216,17 @@ namespace debug{
 
     template<class T1, class T2, class T3>
     int push(tuple<T1, T2, T3> x){
-        if(group.count(typeid(x).name())) push("[");
+        bool isGroup = group.count(typeid(x).name());
+        if(isGroup){
+            push("[");
+            SET_GROUP(T1);
+            SET_GROUP(T2);
+            SET_GROUP(T3);
+        }
         push(get<0>(x));
         push(get<1>(x));
         push(get<2>(x));
-        if(group.count(typeid(x).name())){
+        if(isGroup){
             push("]");
             return 0;
         }
@@ -215,12 +235,19 @@ namespace debug{
 
     template<class T1, class T2, class T3, class T4>
     int push(tuple<T1, T2, T3, T4> x){
-        if(group.count(typeid(x).name())) push("[");
+        bool isGroup = group.count(typeid(x).name());
+        if(isGroup){
+            push("[");
+            SET_GROUP(T1);
+            SET_GROUP(T2);
+            SET_GROUP(T3);
+            SET_GROUP(T4);
+        }
         push(get<0>(x));
         push(get<1>(x));
         push(get<2>(x));
         push(get<3>(x));
-        if(group.count(typeid(x).name())){
+        if(isGroup){
             push("]");
             return 0;
         }
@@ -229,13 +256,21 @@ namespace debug{
 
     template<class T1, class T2, class T3, class T4, class T5>
     int push(tuple<T1, T2, T3, T4, T5> x){
-        if(group.count(typeid(x).name())) push("[");
+        bool isGroup = group.count(typeid(x).name());
+        if(isGroup){
+            push("[");
+            SET_GROUP(T1);
+            SET_GROUP(T2);
+            SET_GROUP(T3);
+            SET_GROUP(T4);
+            SET_GROUP(T5);
+        }
         push(get<0>(x));
         push(get<1>(x));
         push(get<2>(x));
         push(get<3>(x));
         push(get<4>(x));
-        if(group.count(typeid(x).name())){
+        if(isGroup){
             push("]");
             return 0;
         }
@@ -244,14 +279,18 @@ namespace debug{
 
     template<class T>
     int push(vector<T> x){
-        if(group.count(typeid(x).name())) push("[");
+        bool isGroup = group.count(typeid(x).name());
+        if(isGroup){
+            push("[");
+            SET_GROUP(T);
+        }
         int sep = 1;
         for(int i = 0; i < min<int>(maxDispCnt, SIZE(x)); ++i){
             int tmp = push(x.at(i));
             sep += tmp;
             if(tmp) output << "\n";
         }
-        if(group.count(typeid(x).name())){
+        if(isGroup){
             push("]");
             return 0;
         }
@@ -284,10 +323,12 @@ namespace debug{
     template<class T>
     int push(set<T> x){
         bool isGroup = group.count(typeid(x).name());
-        if(isGroup) push("[");
+        if(isGroup){
+            push("[");
+            SET_GROUP(T);
+        }
         int sep = 1, cnt = 0;
         for(const auto& e : x){
-            if(isGroup) SET_GROUP(e);
             int tmp = push(e);
             if(tmp >= 1) output << "\n";
             sep += tmp;
@@ -303,10 +344,12 @@ namespace debug{
     template<class T>
     int push(set<T, greater<T>> x){
         bool isGroup = group.count(typeid(x).name());
-        if(isGroup) push("[");
+        if(isGroup){
+            push("[");
+            SET_GROUP(T);
+        }
         int sep = 1, cnt = 0;
         for(const auto& e : x){
-            if(isGroup) SET_GROUP(e);
             int tmp = push(e);
             if(tmp >= 1) output << "\n";
             sep += tmp;
@@ -322,10 +365,12 @@ namespace debug{
     template<class T>
     int push(multiset<T> x){
         bool isGroup = group.count(typeid(x).name());
-        if(isGroup) push("[");
+        if(isGroup){
+            push("[");
+            SET_GROUP(T);
+        }
         int sep = 1, cnt = 0;
         for(const auto& e : x){
-            if(isGroup) SET_GROUP(e);
             int tmp = push(e);
             if(tmp >= 1) output << "\n";
             sep += tmp;
@@ -341,10 +386,12 @@ namespace debug{
     template<class T>
     int push(multiset<T, greater<T>> x){
         bool isGroup = group.count(typeid(x).name());
-        if(isGroup) push("[");
+        if(isGroup){
+            push("[");
+            SET_GROUP(T);
+        }
         int sep = 1, cnt = 0;
         for(const auto& e : x){
-            if(isGroup) SET_GROUP(e);
             int tmp = push(e);
             if(tmp >= 1) output << "\n";
             sep += tmp;
@@ -360,12 +407,14 @@ namespace debug{
     template<class T>
     int push(queue<T> x){
         bool isGroup = group.count(typeid(x).name());
-        if(isGroup) push("[");
+        if(isGroup){
+            push("[");
+            SET_GROUP(T);
+        }
         int sep = 1, cnt = 0;
         while(!x.empty()){
             int tmp = push(x.front());
             x.pop();
-            if(isGroup) SET_GROUP(tmp);
             if(tmp >= 1) output << "\n";
             sep += tmp;
             if(cnt++ >= maxDispCnt) break;
@@ -380,12 +429,14 @@ namespace debug{
     template<class T>
     int push(deque<T> x){
         bool isGroup = group.count(typeid(x).name());
-        if(isGroup) push("[");
+        if(isGroup){
+            push("[");
+            SET_GROUP(T);
+        }
         int sep = 1, cnt = 0;
         while(!x.empty()){
             int tmp = push(x.front());
             x.pop_front();
-            if(isGroup) SET_GROUP(tmp);
             if(tmp >= 1) output << "\n";
             sep += tmp;
             if(cnt++ >= maxDispCnt) break;
@@ -400,12 +451,14 @@ namespace debug{
     template<class T>
     int push(priority_queue<T> x){
         bool isGroup = group.count(typeid(x).name());
-        if(isGroup) push("[");
+        if(isGroup){
+            push("[");
+            SET_GROUP(T);
+        }
         int sep = 1, cnt = 0;
         while(!x.empty()){
             int tmp = push(x.top());
             x.pop();
-            if(isGroup) SET_GROUP(tmp);
             if(tmp >= 1) output << "\n";
             sep += tmp;
             if(cnt++ >= maxDispCnt) break;
@@ -420,12 +473,14 @@ namespace debug{
     template<class T>
     int push(priority_queue<T, vector<T>, greater<T>> x){
         bool isGroup = group.count(typeid(x).name());
-        if(isGroup) push("[");
+        if(isGroup){
+            push("[");
+            SET_GROUP(T);
+        }
         int sep = 1, cnt = 0;
         while(!x.empty()){
             int tmp = push(x.top());
             x.pop();
-            if(isGroup) SET_GROUP(tmp);
             if(tmp >= 1) output << "\n";
             sep += tmp;
             if(cnt++ >= maxDispCnt) break;
