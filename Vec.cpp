@@ -3,6 +3,7 @@ class Vec{
 public:
     T x, y, z;
 
+    Vec(){}
     Vec(T X, T Y) : x(X), y(Y), z(0){}
     Vec(T X, T Y, T Z) : x(X), y(Y), z(Z){}
 
@@ -54,6 +55,12 @@ public:
 
     Vec cross(Vec a, Vec b){
         return Vec(a.y * b.z - a.z * b.y, a.z * b.x - a.x * b.z, a.x * b.y - a.y * b.x);
+    }
+
+    Vec rotate(double theta){
+        T resultX = x * cos(theta) - y * sin(theta);
+        T resultY = x * sin(theta) + y * cos(theta);
+        return Vec(resultX, resultY, z);
     }
 
     friend Vec operator *(T b, Vec a){
