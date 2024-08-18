@@ -21,6 +21,17 @@ public:
         elem = Vec;
     }
 
+    Mat(const vector<T> Vec){
+        assert(SIZE(Vec) > 0);
+        h = 1;
+        w = SIZE(Vec);
+        elem.resize(h, vector<double>(w));
+        for(int j = 0; j < w; ++j){
+            elem.at(0).at(j) = Vec.at(j);
+        }
+
+    }
+
     Mat unit(int n) const{
         Mat<T> result(n, n);
         for(int i = 0; i < n; ++i){
@@ -134,8 +145,8 @@ public:
     Mat trans(){
         Mat<T> result(w, h);
         for(int i = 0; i < w; ++i){
-            for(int j = 0; j < w; ++j){
-            result.at(i).at(j) = elem.at(j).at(i);
+            for(int j = 0; j < h; ++j){
+                result.elem.at(i).at(j) = elem.at(j).at(i);
             }
         }
         return result;
@@ -172,44 +183,42 @@ public:
         }
         return result;
     }
-/*
+
     pair<Mat, vector<T>> solveLSE(const vector<T>& y){//連立方程式 
         assert(h == w);
         Mat<T> resultM = elem;
         vector<T> resultY = y;
         for(int i = 0; i < h; ++i){
-            T tmp = resultM.elem.at(i).at(i);
-            if(tmp == 0){
-                for(int j = i + 1; j < h; ++j){
-                    tmp = resultM.elem.at(j).at(i);
-                    if(tmp != 0){
-                        swap(resultM.elem.at(i), resultM.elem.at(j));
-                        swap(resultY.elem.at(i), resultY.elem.at(j));
+            if(resultM.elem.at(i).at(i) == 0){
+                for(int ii = i + 1; ii < h; ++ii){
+                    if(resultM.elem.at(ii).at(i) != 0){
+                        swap(resultM.elem.at(i), resultM.elem.at(ii));
+                        swap(resultY.at(i), resultY.at(ii));
                         break;
                     }
                 }
             }
 
-            //i行目の先頭を1にする
-            assert(tmp != 0);
+            //基準の行の先頭を1にする
+            T tmp = resultM.elem.at(i).at(i);
+            if(tmp == 0) return make_pair(resultM, resultY);
             for(int j = 0; j < w; ++j){
                 resultM.elem.at(i).at(j) /= tmp;
             }
             resultY.at(i) /= tmp;
 
-            //i+1行目以降の先頭を0にする
-            for(int j = 0; j < h; ++j){
-                if(i == j) continue;
-                T tmp2 = resultM.elem.at(j).at(i);
-                for(int k = 0; k < w; ++k){
-                    resultM.elem.at(j).at(k) -= tmp2 * resultM.elem.at(i).at(k);
+            //引き算して0にする
+            for(int ii = 0; ii < h; ++ii) if(i != ii){
+                T coef = resultM.elem.at(ii).at(i) / resultM.elem.at(i).at(i);
+                for(int j = 0; j < w; ++j){
+                    resultM.elem.at(ii).at(j) -= resultM.elem.at(i).at(j) * coef;
                 }
-                resultY.elem.at(j).at(k) -= tmp2 * resultY.elem.at(i).at(k);
+                resultY.at(ii) -= resultY.at(i) * coef;
             }
         }
         return make_pair(resultM, resultY);
     }
-*/
+
     bool operator ==(const Mat<T>& y) const{
         if(h != y.h) return false;
         if(w != y.w) return false;
