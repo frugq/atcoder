@@ -14,6 +14,10 @@ mint perm(ll n, ll r){
     return fact.at(n) * invFact.at(n - r);
 }
 
+mint fact(ll n){
+    return perm(n, n);
+}
+
 mint comb(ll n, ll k){
 	assert(n >= 0);
 	assert(k >= 0);
