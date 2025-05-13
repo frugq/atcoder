@@ -5,10 +5,13 @@ public:
     
     Interger(){}
     Interger(ll Val){
-        val = Val;
+        val = bigint(Val);
     }
     Interger(bigint Val){
         val = Val;
+    }
+    Interger(string Val){
+        val = bigint(Val);
     }
 
     bool operator<(const Interger& y) const{
@@ -68,11 +71,17 @@ public:
     }
 
     Interger pow(const Interger& y) const{
-        bigint result = 1;
-        rep(i, y.val){
-            result *= val;
+        if(val == 0) return Interger(1);
+        if(val == 1) return Interger(1);
+        bigint result = 1, yy = y.val, tmp = val;
+        while(yy){
+            if(yy & 1){
+                result *= tmp;
+            }
+            yy >>= 1;
+            tmp *= tmp;
         }
-        return result;
+        return Interger(result);
     }
 
     Interger sqrt(const Interger& n = 2) const{//floor(√x) 範囲注意
