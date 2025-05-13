@@ -1,25 +1,3 @@
-#include <bits/stdc++.h>
-using namespace std;
-//#include <atcoder/all>
-//using namespace atcoder;
-#ifdef __LOCAL
-#include "debug2.h"
-#endif
-#ifndef __LOCAL
-#define show(...) 
-#define SET_GROUP(x)
-#define SET_MAXCNT(x)
-#endif
-#define SIZE(x) (int)(x.size())
-#define ALL(x) x.begin(),x.end()
-using ll = long long;
-template<class T>bool chmin(T& x,T y){if(x>y){x=y;return true;}return false;}
-template<class T>bool chmax(T& x,T y){if(x<y){x=y;return true;}return false;}
-template<class T>vector<T>matrix(int n1,T val){return vector<T>(n1,val);}
-template<class T>vector<vector<T>>matrix(int n1,int n2,T val){return vector<vector<T>>(n1,matrix<T>(n2,val));}
-template<class T>vector<vector<vector<T>>>matrix(int n1,int n2,int n3,T val){return vector<vector<vector<T>>>(n1,matrix<T>(n2,n3,val));}
-template<class T>vector<vector<vector<vector<T>>>>matrix(int n1,int n2,int n3,int n4,T val){return vector<vector<vector<vector<T>>>>(n1,matrix<T>(n2,n3,n4,val));}
-
 template<class Dist>
 class Dijkstra{
 public:
@@ -100,29 +78,3 @@ public:
         }
     }
 };
-
-int main(){
-    ll n, a, b, c, inf = 1LL << 60;
-    cin >> n >> a >> b >> c;
-    Dijkstra<ll> dij1(n, 0, inf, {0});
-    Dijkstra<ll> dijN(n, 0, inf, {(int)n - 1});
-
-    for(int i = 0; i < n; ++i) for(int j = 0; j < n; ++j){
-        ll d;
-        cin >> d;
-        dij1.makeRoad(i, j, Dijkstra<ll>::Road(d * a));
-        dijN.makeRoad(i, j, Dijkstra<ll>::Road(d * b + c));
-    }
-
-    dij1.solve();
-    dijN.solve();
-    ll ans = inf;
-    for(int i = 0; i < n; ++i){
-        chmin(ans, dij1.dist.at(i) + dijN.dist.at(i));
-    }
-    dij1.printroad();
-    //show(dij1.dist);
-    //show(dijN.dist);
-    cout << ans << endl;
-    return 0;
-}
