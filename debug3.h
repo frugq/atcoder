@@ -1,3 +1,5 @@
+//debug3.h
+
 #ifndef INIT_H
 #define INIT_H
 #include <bits/stdc++.h>
@@ -10,7 +12,7 @@ using namespace std;
 
 namespace debug{
     using ll = long long;
-    #define SIZE(x) (int)(x.size())
+    #define SIZE_(x) (int)(x.size())
     vector<string> name;
     stringstream output;
     int idx = 0;
@@ -51,7 +53,7 @@ namespace debug{
 
     vector<string> outputSeparate(string s){
         vector<string> result;
-        for(int i = 0; i < SIZE(s); ++i){
+        for(int i = 0; i < SIZE_(s); ++i){
             char e = s.at(i);
             if(e == '\n'){
                 result.push_back("\n");
@@ -160,7 +162,7 @@ namespace debug{
     template<class T>
     int push(vector<T> x){
         int sep = 1;
-        for(int i = 0; i < min<int>(maxDispCnt, SIZE(x)); ++i){
+        for(int i = 0; i < min<int>(maxDispCnt, SIZE_(x)); ++i){
             int tmp = push(x.at(i));
             sep += tmp;
             if(tmp) output << "\n";
@@ -297,7 +299,7 @@ namespace debug{
             int width = 0;
             bool sep = false;
             for(const auto& e : outputSeparate(output.str())){
-                width = max(width, SIZE(e));
+                width = max(width, SIZE_(e));
                 if(e.back() == '\n') sep = true;
             }
             for(const auto& e : outputSeparate(output.str())){
