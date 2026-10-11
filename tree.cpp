@@ -1,6 +1,6 @@
 template<class Dist>
 class Tree{
-private: 
+public: 
     int n, root, idxRoad = 0, log2N = 0;
     const int int_inf = 1 << 30;
     Dist zero, inf;
@@ -22,6 +22,7 @@ private:
 
     void dfs(int now){
         seen.at(now) = true;
+		eularPath.push_back(now);
         for(const auto& nxt : road.at(now)){
             if(seen.at(nxt.to)) continue;
             listRoad.at(nxt.id).upper = now;
@@ -29,7 +30,6 @@ private:
             initDist.at(nxt.to) = initDist.at(now) + nxt.dist;
             simpleDist.at(nxt.to) = simpleDist.at(now) + 1;
             preTown.at(nxt.to).at(0) = now;
-            eularPath.push_back(now);
             dfs(nxt.to);
         }
         eularPath.push_back(now);
