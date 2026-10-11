@@ -10,6 +10,7 @@ using namespace std;
 
 #define SET_GROUP(x) debug::group.emplace(typeid(x).name())
 #define SET_MAXCNT(x) debug::maxDispCnt = x
+#define SET_DISPLAY_INDEX(x) debug::showIdx = x
 
 namespace debug{
     //変数一覧
@@ -20,6 +21,7 @@ namespace debug{
     int maxDispCnt = 30;
     string space = "                                                         ";
     set<string> group;
+    bool showIdx = false;
 
     //関数一覧
     int push(ll x); //短いものは0を返し、長いものは1以上を返す
@@ -80,23 +82,52 @@ namespace debug{
         if(isdigit(name.at(idx).at(0))){
             cerr << name.at(idx);
         }else{
+            int tmpIdx = -1;//縦の表示用インデックス
             if(push(x) >= 2){
                 cerr << "\n" << name.at(idx) << " =\n";
+                if(showIdx) cerr << "   ";
+                //cerr << "(" << setfill(' ') << setw(2) << to_string(tmpIdx++) << ")  ";
             }else{
                 cerr << name.at(idx) + " =";
             }
 
-            int width = 0;
+            int width = 0, widthCnt = 0, tmpWidthCnt = 0;
             bool sep = false;
             for(const auto& e : outputSeparate(output.str())){
                 width = max(width, (int)e.size());
-                if(e.back() == '\n') sep = true;
-            }
-            for(const auto& e : outputSeparate(output.str())){
-                if(sep){
-                    cerr << space.substr(0, width - (int)e.size()) << e;
+                if(showIdx) width = max(width, 4);
+                if(e == "\n"){
+                    sep = true;
+                    tmpWidthCnt = 0;
                 }else{
-                    cerr << e;
+                    tmpWidthCnt++;
+                    widthCnt = max(widthCnt, tmpWidthCnt);
+                }
+            }
+            auto osVec = outputSeparate(output.str());
+            if(showIdx){
+                vector<string> a = {};
+                for(int i = 0; i < widthCnt; ++i){
+                    a.push_back(to_string(i));
+                }
+                a.push_back("\n");
+                for(int i = 0; i < widthCnt; ++i) a.push_back("__");
+                a.push_back("\n");
+                for(const auto& e : osVec) a.push_back(e);
+                osVec = a;
+            }
+            for(int i = 0; i < (int)osVec.size(); ++i){
+                auto& e = osVec.at(i);
+                if(showIdx && e == "\n" && i < (int)osVec.size() - 1){
+                    if(tmpIdx >= 0) cerr << "\n" << setfill(' ') << setw(2) << to_string(tmpIdx) << "|";
+                    else cerr << "\n   ";
+                    tmpIdx++;
+                }else{
+                    if(sep){
+                        cerr << space.substr(0, width - (int)e.size()) << e;
+                    }else{
+                        cerr << e;
+                    }
                 }
             }
         }
@@ -288,7 +319,6 @@ namespace debug{
             int tmp = push(x.at(i));
             sep += tmp;
             if(tmp){
-                push("<" + to_string(i) + ">");
                 output << "\n";
             }
         }
